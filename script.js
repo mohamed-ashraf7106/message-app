@@ -127,7 +127,7 @@ myusers
                 });
                 console.log(sent);
 
-                if (sent) {
+                if (sent != {}) {
                   console.log("here");
                   console.log(sent);
 
