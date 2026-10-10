@@ -67,7 +67,6 @@ myusers
             for (let i = 0; i < e.length; i++) {
               msgs[`${e[i].userId}`].push(`${e[i].title}`);
             }
-            console.log(msgs);
             localStorage.setItem("incoming", JSON.stringify(msgs));
             for (let user = 1; user <= data.length; user++) {
               let lastMsg = msgs[`${user}`][msgs[`${user}`].length - 1];
@@ -126,8 +125,7 @@ myusers
                   messages.append(ms);
                 });
                 console.log(sent);
-
-                if (sent != {}) {
+                if (sent[i + 1] !== undefined) {
                   console.log("here");
                   console.log(sent);
 
@@ -181,7 +179,12 @@ myusers
                   if (event.key === "Enter") {
                     if (draft.value != "") {
                       console.log(draft.value);
-                      sent[i + 1].push(draft.value);
+                      if (sent[i + 1] !== undefined) {
+                        sent[i + 1].push(draft.value);
+                      } else {
+                        sent[i + 1] = [];
+                        sent[i + 1].push(draft.value);
+                      }
                       console.log(sent);
                       let ms = document.createElement("div");
                       ms.innerHTML = `
