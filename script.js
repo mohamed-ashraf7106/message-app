@@ -70,6 +70,10 @@ myusers
             localStorage.setItem("incoming", JSON.stringify(msgs));
             for (let user = 1; user <= data.length; user++) {
               let lastMsg = msgs[`${user}`][msgs[`${user}`].length - 1];
+              if (sent[user] !== undefined) {
+                lastMsg = sent[user];
+                lastMsg = lastMsg[lastMsg.length - 1];
+              }
               if (lastMsg.length >= 28) {
                 lastMsg = lastMsg.slice(0, 28);
                 lastMsg += "...";
@@ -140,7 +144,7 @@ myusers
                 chat.append(messages);
                 let inpt = document.createElement("div");
                 inpt.innerHTML = `        
-                  <input type="text" name="draft" id="send">
+                  <input type="text" class="${i} entry" name="draft" id="send">
                   <i class="fa-regular fa-paper-plane submit"></i>
                   `;
                 inpt.classList.add("input");
@@ -166,12 +170,25 @@ myusers
                     ms.innerHTML = `
                       <div class="message">${draft.value}</div>
                     `;
+                    let entry = document.getElementsByClassName("entry")[0];
+                    let myPerson =
+                      document.getElementsByClassName("person")[
+                        entry.classList[0]
+                      ];
+                    let lastMsgg =
+                      document.getElementsByClassName("lastMsg")[
+                        entry.classList[0]
+                      ];
+                    console.log(myPerson);
+                    console.log(lastMsgg);
+                    lastMsgg.innerText = draft.value;
                     draft.value = "";
                     messages.append(ms);
                     messages.scrollTo({
                       top: messages.scrollHeight,
                       behavior: "smooth",
                     });
+
                     localStorage.setItem("sent", JSON.stringify(sent));
                   }
                 });
@@ -190,6 +207,19 @@ myusers
                       ms.innerHTML = `
                       <div class="message">${draft.value}</div>
                     `;
+                      let entry = document.getElementsByClassName("entry")[0];
+                      let myPerson =
+                        document.getElementsByClassName("person")[
+                          entry.classList[0]
+                        ];
+                      let lastMsgg =
+                        document.getElementsByClassName("lastMsg")[
+                          entry.classList[0]
+                        ];
+                      console.log(myPerson);
+                      console.log(lastMsgg);
+                      lastMsgg.innerText = draft.value;
+                      draft.value = "";
                       draft.value = "";
                       messages.append(ms);
                       messages.scrollTo({
